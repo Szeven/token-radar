@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — which pre-token protocol is worth farming next</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="dot"></span><h1>Token Launch Radar</h1></div>
+  <p class="tag">Every pre-token protocol in the snapshot, ranked by what its token may be worth — and what to do about it.</p>
+  <p class="meta" id="meta">Loading snapshot…</p>
+</header>
+
+<section class="stats" id="stats" aria-label="Snapshot summary"></section>
+
+<nav class="tabs" role="tablist">
+  <button class="tab active" data-tab="board" role="tab" aria-selected="true">Board</button>
+  <button class="tab" data-tab="live" role="tab" aria-selected="false">Live tokens</button>
+  <button class="tab" data-tab="model" role="tab" aria-selected="false">Model</button>
+</nav>
+
+<section class="panel" id="panel-board">
+  <div class="controls">
+    <input id="q" type="search" placeholder="Search a protocol…" aria-label="Search protocols">
+    <select id="cat" aria-label="Filter by category"><option value="">All categories</option></select>
+    <select id="chain" aria-label="Filter by chain"><option value="">All chains</option></select>
+    <label class="check"><input id="watch" type="checkbox"> Watchlist only</label>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="tablewrap">
+    <table id="board">
+      <thead><tr>
+        <th data-sort="rank">#</th>
+        <th data-sort="name">Protocol</th>
+        <th data-sort="category">Category</th>
+        <th data-sort="chains">Chains</th>
+        <th data-sort="tvl_usd" class="num">TVL</th>
+        <th data-sort="change_7d" class="num">7d</th>
+        <th data-sort="age_days" class="num">Age</th>
+        <th data-sort="implied_value_usd" class="num">Implied value</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <p class="hint">Click a row for the protocol's detail view and farm plan. Click a column header to sort.</p>
+</section>
+
+<section class="panel hidden" id="panel-live">
+  <p class="hint">These already trade, so the board shows the market's own value — never a model's guess. They are the comps the radar's multiples are calibrated from.</p>
+  <div class="tablewrap">
+    <table id="livetable">
+      <thead><tr><th>Protocol</th><th>Category</th><th>Chains</th><th class="num">TVL</th><th class="num">Market cap</th><th class="num">Mcap / TVL</th><th class="num">7d</th></tr></thead>
+      <tbody id="liverows"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel hidden" id="panel-model">
+  <h2>How the radar prices a token that does not exist yet</h2>
+  <div id="modeltext"></div>
+  <h3>Model sandbox</h3>
+  <p class="hint">Move a slider and the board re-ranks live, from the same snapshot figures. The shipped board uses the defaults.</p>
+  <div class="sandbox">
+    <label>Growth weight <output id="gw-out">0.50</output><input id="gw" type="range" min="0" max="1" step="0.05" value="0.5"></label>
+    <label>Maturity range <output id="mr-out">0.40</output><input id="mr" type="range" min="0" max="0.8" step="0.05" value="0.4"></label>
+    <label>Multiple scale <output id="ms-out">1.00×</output><input id="ms" type="range" min="0.5" max="2" step="0.05" value="1"></label>
+  </div>
+  <h3>Calibrated multiples</h3>
+  <p class="hint">Median market-cap-to-TVL among the snapshot's live-token protocols, per category. A category with fewer than three live names uses the global median.</p>
+  <div id="calibration"></div>
+</section>
+
+<aside class="detail hidden" id="detail" aria-label="Protocol detail"></aside>
+
+<footer>
+  <p>Data: sealed DefiLlama snapshot, frozen <span id="asof"></span>. Implied values are this radar's own model, not investment advice. Built with Superbot — the uncensored model for agent work, superbot.gg — for the make.fun token-radar-01 bounty.</p>
+</footer>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
